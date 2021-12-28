@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DssData</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="addressApi.js"></script>
+	<script type="text/javascript">
+		var ListCountyResult = [];
+		$(function () {
+			ListCounty();
+		});
+
+		function printOutput() {
+			var address = document.getElementById('txtAdd').value;
+			var villageId = document.getElementById('villageId');
+			var villageName = document.getElementById('villageName');
+
+			geocoderInfo(address, function (result) {
+				villageId.innerText = result.villageId;
+				villageName.innerText = result.villageName;
+			});
+		};
+
+		function geocoderInfo(address, callback) {
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'address': address }, function (results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {
+					var result = findVillage(results);
+					callback(result);
+				}
+				else {
+					alert("地址判斷失敗原因：" + status);
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<div>
+		地址：<input type="text" id="txtAdd"/>
+		<input type="button" id="btnSend" value="送出" onclick="printOutput()" /><br /><br />
+		村里代碼：<label id="villageId"></label><br />
+		村里名稱：<label id="villageName"></label>
+	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLLBiMIEf_H4zDLN-UwqR4l4GoVfFQnx8" async></script>
+</body>
+</html>

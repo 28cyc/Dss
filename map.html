@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DssMap</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="addressApi.js"></script>
+	<script type="text/javascript">
+		var ListCountyResult = [];
+		$(function () {
+			ListCounty();
+		});
+
+		function initMap() {
+			const mapDiv = document.getElementById("map");
+			const map = new google.maps.Map(mapDiv, {
+				zoom: 12,
+				center: new google.maps.LatLng(24.965962193545263, 121.21373480363306),
+				streetViewControl: false,
+				fullscreenControl: false,
+			});
+
+			google.maps.event.addListener(map, "click", function (event) {
+				var coord = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+				geocoderInfo(coord, function (result) {
+					alert(result.villageId + "," + result.villageName);
+				});
+			});
+		}
+
+		function geocoderInfo(coord, callback) {
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'latLng': coord }, function (results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {
+					var result = findVillage(results);
+					callback(result);
+				}
+				else {
+					alert("Reverse Geocoding failed because: " + status);
+				}
+			});
+		}
+	</script>
+	<style>
+		#map {
+			height: 100%;
+		}
+
+		/* Optional: Makes the sample page fill the window. */
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+
+	<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLLBiMIEf_H4zDLN-UwqR4l4GoVfFQnx8&callback=initMap&v=weekly" async></script>
+</body>
+</html>
