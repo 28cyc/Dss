@@ -10,6 +10,7 @@
 			ListCounty();
 		});
 
+		//地址
 		function printOutput() {
 			var address = document.getElementById('txtAdd').value;
 			var villageId = document.getElementById('villageId');
@@ -33,14 +34,49 @@
 				}
 			});
 		}
+
+		//經緯度
+		function printOutput2() {
+			var longitude = document.getElementById('txtLng').value;
+			var latitude = document.getElementById('txtLat').value;
+			var villageId2 = document.getElementById('villageId2');
+			var villageName2 = document.getElementById('villageName2');
+
+			var coord = new google.maps.LatLng(latitude, longitude);
+			geocoderInfo(coord, function (result) {
+				villageId2.innerText = result.villageId;
+				villageName2.innerText = result.villageName;
+			});
+		};
+
+		function geocoderInfo(coord, callback) {
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'latLng': coord }, function (results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {
+					var result = findVillage(results);
+					callback(result);
+				}
+				else {
+					alert("地址判斷失敗原因：" + status);
+				}
+			});
+		}
 	</script>
 </head>
 <body>
 	<div>
-		地址：<input type="text" id="txtAdd"/>
+		地址：<input type="text" id="txtAdd" />
 		<input type="button" id="btnSend" value="送出" onclick="printOutput()" /><br /><br />
 		村里代碼：<label id="villageId"></label><br />
 		村里名稱：<label id="villageName"></label>
+
+		<br /><br /><br /><br />
+		*如果地址跑不出結果代表地址不太完整，可以改用經緯度轉*<br />
+		經度(121)：<input type="text" id="txtLng" />
+		緯度(25)：<input type="text" id="txtLat" />
+		<input type="button" id="btnSend" value="送出" onclick="printOutput2()" /><br /><br />
+		村里代碼：<label id="villageId2"></label><br />
+		村里名稱：<label id="villageName2"></label>
 	</div>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLLBiMIEf_H4zDLN-UwqR4l4GoVfFQnx8" async></script>
 </body>
