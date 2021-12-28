@@ -43,13 +43,13 @@
 			var villageName2 = document.getElementById('villageName2');
 
 			var coord = new google.maps.LatLng(latitude, longitude);
-			geocoderInfo(coord, function (result) {
+			geocoderInfo2(coord, function (result) {
 				villageId2.innerText = result.villageId;
 				villageName2.innerText = result.villageName;
 			});
 		};
 
-		function geocoderInfo(coord, callback) {
+		function geocoderInfo2(coord, callback) {
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': coord }, function (results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
@@ -74,7 +74,7 @@
 		*如果地址跑不出結果代表地址不太完整，可以改用經緯度轉*<br />
 		經度(121)：<input type="text" id="txtLng" />
 		緯度(25)：<input type="text" id="txtLat" />
-		<input type="button" id="btnSend" value="送出" onclick="printOutput2()" /><br /><br />
+		<input type="button" id="btnSend2" value="送出" onclick="printOutput2()" /><br /><br />
 		村里代碼：<label id="villageId2"></label><br />
 		村里名稱：<label id="villageName2"></label>
 	</div>
