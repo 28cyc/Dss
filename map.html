@@ -19,7 +19,7 @@
 				fullscreenControl: false,
 			});
 
-			map.data.loadGeoJson('zhongli.json');
+			map.data.loadGeoJson('geoJson.json');
 			
 			google.maps.event.addListener(map, "click", function (event) {
 				var coord = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
