@@ -4,18 +4,6 @@
 		{
 			"type": "Feature",
 			"properties": {
-				//"TOWN": "\u4e2d\u58e2\u5e02",
-				//"COUNTY": "\u6843\u5712\u7e23",
-				//"TOWN_ID": "10003020",
-				//"COUNTY_ID": "10003",
-				//"AREA": "75750704.1052",
-				//"SORT": "7",
-				//"SHOW_ID": "S07-10003020",
-				//"stroke": "#000000",
-				//"stroke-width": 2,
-				//"stroke-opacity": 1,
-				//"fill": "#ff2600",
-				//"fill-opacity": 0.5
 			},
 			"geometry": {
 				"type": "Polygon",
