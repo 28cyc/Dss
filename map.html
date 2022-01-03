@@ -29,7 +29,7 @@
 					var hiddenLabel = document.getElementById('hiddenVillageId');
 					label.value = results.countyname + results.townname + results.villageName;
 					hiddenLabel.value = results.villageId;
-					//connModleApi(1, 1);
+					connModleApi(1, 1);
 					var villageData = getVillageData(results.villageId);
 					document.getElementById('PopulationData').innerText = villageData.Population;
 					document.getElementById('AreaData').innerText = villageData.Area;
@@ -140,23 +140,23 @@
 			<b>相關數據：</b><br />
 			<table id="dataArea">
 				<tr>
-					<td style="width: 40%">人口數</td>
+					<td style="width: 50%">人口數</td>
 					<td id="PopulationData">0</td>
 				</tr>
 				<tr>
-					<td style="width: 40%">土地面積</td>
+					<td style="width: 50%">土地面積</td>
 					<td id="AreaData">0<td>
 				</tr>
 				<tr>
-					<td style="width: 40%">同性質商店數</td>
+					<td style="width: 50%">同性質商店數</td>
 					<td id="SimilarStoreAmtData">0</td>
 				</tr>
 				<tr>
-					<td style="width: 40%">學校數量</td>
+					<td style="width: 50%">學校數量</td>
 					<td id="SchoolAmtData">0</td>
 				</tr>
 				<tr>
-					<td style="width: 40%">景點數量</td>
+					<td style="width: 50%">景點數量</td>
 					<td id="AttractionsData">0</td>
 				</tr>
 			</table>
