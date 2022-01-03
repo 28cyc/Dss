@@ -117,13 +117,9 @@ body {
 	border-collapse: collapse;
 	border-radius: 8px;
 	overflow: hidden;
+	background-color: #f2f2f2;
 }
 
 	#dataArea td {
-		/*border: 1px solid #ddd;*/
 		padding: 8px;
-	}
-
-	#dataArea tr:nth-child(odd) {
-		background-color: #f2f2f2;
 	}

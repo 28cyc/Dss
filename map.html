@@ -31,11 +31,12 @@
 					hiddenLabel.value = results.villageId;
 					connModleApi(1, 1);
 					var villageData = getVillageData(results.villageId);
-					document.getElementById('PopulationData').innerText = villageData.Population;
-					document.getElementById('AreaData').innerText = villageData.Area;
-					document.getElementById('SimilarStoreAmtData').innerText = villageData.SimilarStoreAmt;
-					document.getElementById('SchoolAmtData').innerText = villageData.SchoolAmt;
-					document.getElementById('AttractionsData').innerText = villageData.Attractions;
+					debugger;
+					document.getElementById('PopulationData').innerText = villageData.population;
+					document.getElementById('AreaData').innerText = villageData.area +" km2";
+					document.getElementById('SimilarStoreAmtData').innerText = villageData.similarStoreAmt;
+					document.getElementById('SchoolAmtData').innerText = villageData.schoolAmt;
+					document.getElementById('AttractionsData').innerText = villageData.attractions;
 					//console.log(villageData);
 				});
 			});
@@ -141,23 +142,23 @@
 			<table id="dataArea">
 				<tr>
 					<td style="width: 50%">人口數</td>
-					<td id="PopulationData">0</td>
+					<td id="PopulationData" style="width: 50%">0</td>
 				</tr>
 				<tr>
 					<td style="width: 50%">土地面積</td>
-					<td id="AreaData">0<td>
+					<td id="AreaData" style="width: 50%">0<td>
 				</tr>
 				<tr>
 					<td style="width: 50%">同性質商店數</td>
-					<td id="SimilarStoreAmtData">0</td>
+					<td id="SimilarStoreAmtData" style="width: 50%">0</td>
 				</tr>
 				<tr>
 					<td style="width: 50%">學校數量</td>
-					<td id="SchoolAmtData">0</td>
+					<td id="SchoolAmtData" style="width: 50%">0</td>
 				</tr>
 				<tr>
 					<td style="width: 50%">景點數量</td>
-					<td id="AttractionsData">0</td>
+					<td id="AttractionsData" style="width: 50%">0</td>
 				</tr>
 			</table>
 		</div>
