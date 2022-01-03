@@ -79,5 +79,5 @@ function findVillage(results) {
 	var countycode = ListCountyResult.find(item => item.countyname == countyname).countycode; //縣市代碼(H)
 	var towncode01 = ListTown(countycode).find(item => item.townname == level3).towncode01; //鄉鎮市區代碼(H01)
 	var villageId = ListVillage(countycode, towncode01).find(item => item.villageName == level4).villageId; //村里代碼(68000010001)
-	return { "villageId": villageId, "villageName": level4 };
+	return { "countyname": countyname, "townname": level3, "villageId": villageId, "villageName": level4 };
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DssMap</title>
+	<title>便利商店選址系統</title>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="addressApi.js"></script>
 	<script type="text/javascript">
@@ -20,12 +20,18 @@
 			});
 
 			map.data.loadGeoJson('zhongli.json');
-			
+
 			google.maps.event.addListener(map, "click", function (event) {
 				var coord = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-				geocoderInfo(coord, function (result) {
-					getVillageData(result.villageId);
-					alert(result.villageId + "," + result.villageName);
+				geocoderInfo(coord, function (results) {
+					var label = document.getElementById('selectedVillage');
+					var hiddenLabel = document.getElementById('hiddenVillageId');
+					label.value = results.countyname + results.townname + results.villageName;
+					hiddenLabel.value = results.villageId;
+					connModleApi(1, 1);
+					//var villageData = getVillageData(results.villageId);
+					//console.log(villageData);
+					//connModleApi(villageData, type);
 				});
 			});
 		}
@@ -34,48 +40,156 @@
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': coord }, function (results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
-					var result = findVillage(results);
-					callback(result);
+					results = findVillage(results);
+					callback(results);
 				}
 				else {
-					alert("Reverse Geocoding failed because: " + status);
+					if (status == "OVER_QUERY_LIMIT") {
+						alert("按太快了> <");
+					}
+					else {
+						alert("Reverse Geocoding failed because: " + status);
+					}
 				}
 			});
 		}
-		
-		function getVillageData(villageId){
-			//var villageId = 6800002075;
+
+		function getVillageData(villageId) {
+			var result = {};
 			$.ajax({
 				type: "GET",
-				url: `https://1101dss.azurewebsites.net/api/dss/6800002075`,
+				url: 'https://1101dss.azurewebsites.net/api/dss/store/' + villageId,
 				dataType: "json",
-				//async: false,
+				async: false,
+				success: function (data) {
+					result = data;
+				},
+				error: function (thrownError) {
+					console.log(thrownError);
+				}
+			});
+			return result;
+		}
+
+		function connModleApi(data, type) {
+			$.ajax({
+				type: "POST",
+				url: `https://dss-final.herokuapp.com/inputSimilar`,
+				dataType: "json",
+				data: {
+					"Village": 1,
+					"VillageID": 2,
+					"SchoolAmt": 3,
+					"Population": 4,
+					"Area": 5,
+					"PopulationDensity": 6,
+					"Attractions": 7,
+					"Traffic": 8,
+					"AvgServeP": 9,
+					"AvgServeAS": 10
+				},
+				async: false,
 				success: function (data) {
 					console.log(data)
 				},
 				error: function (thrownError) {
 					console.log(thrownError);
 				}
-			});			
+			});
 		}
 	</script>
 	<style>
 		#map {
 			height: 100%;
+			width: 75%;
+			float: right;
+		}
+
+		#menu {
+			height: 100%;
+			width: 25%;
+			float: left;
+		}
+
+		#title {
+			height: 10%;
+			width: 100%;
+			background-color: #01814A;
+			font-size: 230%;
+			font-weight: bold;
+			color: white;
+			text-align: center;
+		}
+
+		#firstList {
+			height: 15%;
+			width: 100%;
+		}
+
+		#secondList {
+			height: 15%;
+			width: 100%;
+		}
+
+		button {
+			background-color: #E0E0E0;
+			border: none;
+			color: #3C3C3C;
+			padding: 15px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 15px;
+			margin: 4px 2px;
+			cursor: pointer;
+			border-radius: 8px
+		}
+
+		button:focus {
+			border: 1.5px solid #555555;
+		}
+
+		input[type=text] {
+			width: 90%;
+			box-sizing: border-box;
+			border: 1.5px solid #ccc;
+			border-radius: 8px;
+			font-size: 16px;
+			background-color: white;
+			background-position: 10px 10px;
+			background-repeat: no-repeat;
+			padding: 15px;
 		}
 
 		/* Optional: Makes the sample page fill the window. */
 		html,
 		body {
 			height: 100%;
+			width: 100%;
 			margin: 0;
-			padding: 0;
 		}
 	</style>
 </head>
 <body>
+	<div id="menu">
+		<div id="title">便利商店選址系統</div>
+		<div id="firstList">
+			選擇的地區為：<br />
+			<div style="text-align: center;">
+				<input type="text" id="selectedVillage" disabled="disabled"/>
+				<input type="hidden" id="hiddenVillageId" />
+			</div>
+		</div>
+		<div id="secondList">
+			選擇決策方法：<br />
+			<div style="text-align: center;">
+				<button>同性質商店</button>
+				<button>人口</button>
+				<button>景點、學校</button>
+			</div>
+		</div>
+	</div>
 	<div id="map"></div>
-
 	<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLLBiMIEf_H4zDLN-UwqR4l4GoVfFQnx8&callback=initMap&v=weekly" async></script>
 </body>
