@@ -70,44 +70,55 @@
 
 		function connModleApi(data, type) {
 			var url = "";
+			var dataObj = {};
+			var storeObj = {
+				"district": data.district,
+				"villageID": data.villageID,
+				"schoolAmt": data.schoolAmt,
+				"population": data.population,
+				"area": data.area,
+				"populationDensity": data.populationDensity,
+				"attractions": data.attractions,
+				"traffic": data.traffic,
+				"avgServeP": data.avgServeP,
+				"avgServeAS": data.avgServeAS
+			};
+			var peopleSchoolObj = {
+				"district": data.district,
+				"villageID": data.villageID,
+				"schoolAmt": data.schoolAmt,
+				"similarStoreAmt": data.similarStoreAmt,
+				"population": data.population,
+				"area": data.area,
+				"populationDensity": data.populationDensity,
+				"attractions": data.attractions,
+				"traffic": data.traffic,
+				"avgServeP": data.avgServeP,
+				"avgServeAS": data.avgServeAS
+			};
+
 			switch (type) {
 				case 'store':
 					url = "https://dss-final.herokuapp.com/inputSimilar";
+					dataObj = storeObj;
 					break;
 				case 'people':
 					url = "https://dss-final.herokuapp.com/inputPopulation";
+					dataObj = peopleSchoolObj;
 					break;
 				case 'school':
 					url = "https://dss-final.herokuapp.com/inputAS";
+					dataObj = peopleSchoolObj;
 					break;
 			}
-			var dataObj = {
-				"district": "320",
-				"villageID": "2",
-				"schoolAmt": 3,
-				"population": 5,
-				"area": 6,
-				"populationDensity": 7,
-				"attractions": 8,
-				"traffic": 9,
-				"avgServeP": 10,
-				"avgServeAS": 11
-			} 
-;
 
-			$.ajax({
-				type: "POST",
-				url: url,
-				dataType: "json",
-				data: dataObj,
-				async: false,
-				success: function (data) {
-					console.log(data)
-				},
-				error: function (thrownError) {
-					console.log(thrownError);
-				}
-			});
+			postData(url, dataObj)
+				.then(data => {
+					document.getElementById('output').innerText = data.return;
+					$("#dataList").css("visibility", "visible");
+					$("#resultList").css("visibility", "visible");
+				}) 
+				.catch(error => console.error(error))
 		}
 
 		function submit() {
@@ -123,11 +134,7 @@
 				document.getElementById('SchoolAmtData').innerText = villageData.schoolAmt;
 				document.getElementById('AttractionsData').innerText = villageData.attractions;
 
-				alert(villageId + ", " + type);
 				connModleApi(villageData, type);
-			
-				$("#dataList").css("visibility", "visible");
-				$("#resultList").css("visibility", "visible");
 			}
 		}
 	</script>
@@ -179,6 +186,7 @@
 		</div>
 		<div id="resultList" style="visibility:hidden">
 			<b>預測結果：</b><br />
+			<label id="output"></label>
 		</div>
 	</div>
 	<div id="map"></div>
