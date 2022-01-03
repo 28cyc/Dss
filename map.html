@@ -19,7 +19,7 @@
 				streetViewControl: false,
 				fullscreenControl: false,
 			});
-
+			map.setOptions({ draggableCursor: 'pointer' });		
 			map.data.loadGeoJson('zhongli.json');
 
 			google.maps.event.addListener(map, "click", function (event) {
@@ -28,16 +28,7 @@
 					var label = document.getElementById('selectedVillage');
 					var hiddenLabel = document.getElementById('hiddenVillageId');
 					label.value = results.countyname + results.townname + results.villageName;
-					hiddenLabel.value = results.villageId;
-					connModleApi(1, 1);
-					var villageData = getVillageData(results.villageId);
-					debugger;
-					document.getElementById('PopulationData').innerText = villageData.population;
-					document.getElementById('AreaData').innerText = villageData.area +" km2";
-					document.getElementById('SimilarStoreAmtData').innerText = villageData.similarStoreAmt;
-					document.getElementById('SchoolAmtData').innerText = villageData.schoolAmt;
-					document.getElementById('AttractionsData').innerText = villageData.attractions;
-					//console.log(villageData);
+					hiddenLabel.value = results.villageId;					
 				});
 			});
 		}
@@ -78,22 +69,37 @@
 		}
 
 		function connModleApi(data, type) {
+			var url = "";
+			switch (type) {
+				case 'store':
+					url = "https://dss-final.herokuapp.com/inputSimilar";
+					break;
+				case 'people':
+					url = "https://dss-final.herokuapp.com/inputPopulation";
+					break;
+				case 'school':
+					url = "https://dss-final.herokuapp.com/inputAS";
+					break;
+			}
+			var dataObj = {
+				"district": "320",
+				"villageID": "2",
+				"schoolAmt": 3,
+				"population": 5,
+				"area": 6,
+				"populationDensity": 7,
+				"attractions": 8,
+				"traffic": 9,
+				"avgServeP": 10,
+				"avgServeAS": 11
+			} 
+;
+
 			$.ajax({
 				type: "POST",
-				url: `https://dss-final.herokuapp.com/inputSimilar`,
+				url: url,
 				dataType: "json",
-				data: {
-					"Village": 1,
-					"VillageID": 2,
-					"SchoolAmt": 3,
-					"Population": 4,
-					"Area": 5,
-					"PopulationDensity": 6,
-					"Attractions": 7,
-					"Traffic": 8,
-					"AvgServeP": 9,
-					"AvgServeAS": 10
-				},
+				data: dataObj,
 				async: false,
 				success: function (data) {
 					console.log(data)
@@ -110,7 +116,16 @@
 			if (villageId == "") {
 				alert("尚未選擇地區");
 			} else {
+				var villageData = getVillageData(villageId);
+				document.getElementById('PopulationData').innerText = villageData.population;
+				document.getElementById('AreaData').innerText = villageData.area;
+				document.getElementById('SimilarStoreAmtData').innerText = villageData.similarStoreAmt;
+				document.getElementById('SchoolAmtData').innerText = villageData.schoolAmt;
+				document.getElementById('AttractionsData').innerText = villageData.attractions;
+
 				alert(villageId + ", " + type);
+				connModleApi(villageData, type);
+			
 				$("#dataList").css("visibility", "visible");
 				$("#resultList").css("visibility", "visible");
 			}
@@ -145,7 +160,7 @@
 					<td id="PopulationData" style="width: 50%">0</td>
 				</tr>
 				<tr>
-					<td style="width: 50%">土地面積</td>
+					<td style="width: 50%">土地面積(km2)</td>
 					<td id="AreaData" style="width: 50%">0<td>
 				</tr>
 				<tr>
