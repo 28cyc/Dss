@@ -24,6 +24,7 @@
 			google.maps.event.addListener(map, "click", function (event) {
 				var coord = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
 				geocoderInfo(coord, function (result) {
+					getVillageData(result.villageId);
 					alert(result.villageId + "," + result.villageName);
 				});
 			});
@@ -40,6 +41,22 @@
 					alert("Reverse Geocoding failed because: " + status);
 				}
 			});
+		}
+		
+		function getVillageData(villageId){
+			//var villageId = 6800002075;
+			$.ajax({
+				type: "GET",
+				url: `https://1101dss.azurewebsites.net/api/dss/6800002075`,
+				dataType: "json",
+				//async: false,
+				success: function (data) {
+					console.log(data)
+				},
+				error: function (thrownError) {
+					console.log(thrownError);
+				}
+			});			
 		}
 	</script>
 	<style>
