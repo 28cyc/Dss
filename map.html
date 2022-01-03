@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>便利商店選址系統</title>
+	<link type="text/css" href="mapStyle.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="addressApi.js"></script>
 	<script type="text/javascript">
@@ -28,10 +29,14 @@
 					var hiddenLabel = document.getElementById('hiddenVillageId');
 					label.value = results.countyname + results.townname + results.villageName;
 					hiddenLabel.value = results.villageId;
-					connModleApi(1, 1);
-					//var villageData = getVillageData(results.villageId);
+					//connModleApi(1, 1);
+					var villageData = getVillageData(results.villageId);
+					document.getElementById('PopulationData').innerText = villageData.Population;
+					document.getElementById('AreaData').innerText = villageData.Area;
+					document.getElementById('SimilarStoreAmtData').innerText = villageData.SimilarStoreAmt;
+					document.getElementById('SchoolAmtData').innerText = villageData.SchoolAmt;
+					document.getElementById('AttractionsData').innerText = villageData.Attractions;
 					//console.log(villageData);
-					//connModleApi(villageData, type);
 				});
 			});
 		}
@@ -97,96 +102,67 @@
 				}
 			});
 		}
+
+		function submit() {
+			var villageId = $("#hiddenVillageId")[0].value;
+			var type = document.querySelector('input[name="type"]:checked').value;
+			if (villageId == "") {
+				alert("尚未選擇地區");
+			} else {
+				alert(villageId + ", " + type);
+				$("#dataList").css("visibility", "visible");
+				$("#resultList").css("visibility", "visible");
+			}
+		}
 	</script>
-	<style>
-		#map {
-			height: 100%;
-			width: 75%;
-			float: right;
-		}
-
-		#menu {
-			height: 100%;
-			width: 25%;
-			float: left;
-		}
-
-		#title {
-			height: 10%;
-			width: 100%;
-			background-color: #01814A;
-			font-size: 230%;
-			font-weight: bold;
-			color: white;
-			text-align: center;
-		}
-
-		#firstList {
-			height: 15%;
-			width: 100%;
-		}
-
-		#secondList {
-			height: 15%;
-			width: 100%;
-		}
-
-		button {
-			background-color: #E0E0E0;
-			border: none;
-			color: #3C3C3C;
-			padding: 15px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 15px;
-			margin: 4px 2px;
-			cursor: pointer;
-			border-radius: 8px
-		}
-
-		button:focus {
-			border: 1.5px solid #555555;
-		}
-
-		input[type=text] {
-			width: 90%;
-			box-sizing: border-box;
-			border: 1.5px solid #ccc;
-			border-radius: 8px;
-			font-size: 16px;
-			background-color: white;
-			background-position: 10px 10px;
-			background-repeat: no-repeat;
-			padding: 15px;
-		}
-
-		/* Optional: Makes the sample page fill the window. */
-		html,
-		body {
-			height: 100%;
-			width: 100%;
-			margin: 0;
-		}
-	</style>
 </head>
 <body>
 	<div id="menu">
 		<div id="title">便利商店選址系統</div>
 		<div id="firstList">
-			選擇的地區為：<br />
-			<div style="text-align: center;">
-				<input type="text" id="selectedVillage" disabled="disabled"/>
-				<input type="hidden" id="hiddenVillageId" />
-			</div>
+			<b>選擇的地區為：</b><br />
+			<input type="text" id="selectedVillage" disabled="disabled" />
+			<input type="hidden" id="hiddenVillageId" />
 		</div>
 		<div id="secondList">
-			選擇決策方法：<br />
-			<div style="text-align: center;">
-				<button>同性質商店</button>
-				<button>人口</button>
-				<button>景點、學校</button>
+			<b>選擇決策方法：</b><br />
+			<div id="radio">
+				<label><input type="radio" name="type" value="store" checked="checked"><span class="round button">同性質商店</span></label>
+				<label><input type="radio" name="type" value="people"><span class="round button">人口</span></label>
+				<label><input type="radio" name="type" value="school"><span class="round button">景點、學校</span></label>
 			</div>
+		</div>
+		<div id="thirdList">
+			<button id="sumbit" style="width:90%" onclick="submit()">送出</button>
+		</div>
+
+		<div id="dataList" style="visibility:hidden">
+			<b>相關數據：</b><br />
+			<table id="dataArea">
+				<tr>
+					<td style="width: 40%">人口數</td>
+					<td id="PopulationData">0</td>
+				</tr>
+				<tr>
+					<td style="width: 40%">土地面積</td>
+					<td id="AreaData">0<td>
+				</tr>
+				<tr>
+					<td style="width: 40%">同性質商店數</td>
+					<td id="SimilarStoreAmtData">0</td>
+				</tr>
+				<tr>
+					<td style="width: 40%">學校數量</td>
+					<td id="SchoolAmtData">0</td>
+				</tr>
+				<tr>
+					<td style="width: 40%">景點數量</td>
+					<td id="AttractionsData">0</td>
+				</tr>
+			</table>
+		</div>
+		<div id="resultList" style="visibility:hidden">
+			<b>預測結果：</b><br />
 		</div>
 	</div>
 	<div id="map"></div>

@@ -1,0 +1,129 @@
+#map {
+	height: 100%;
+	width: 75%;
+	float: right;
+}
+
+#menu {
+	height: 100%;
+	width: 25%;
+	float: left;
+}
+
+#title {
+	height: 10%;
+	width: 100%;
+	background-color: #01814A;
+	font-size: 230%;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+}
+
+#firstList {
+	height: 13%;
+	width: 100%;
+}
+
+#secondList {
+	height: 13%;
+	width: 100%;
+}
+
+#thirdList {
+	height: 10%;
+	width: 100%;
+}
+
+#dataList {
+	height: 38%;
+	width: 100%;
+}
+
+#radio input[type="radio"] {
+	display: none;
+}
+
+#radio input:checked + .button {
+	background: #5e7380;
+	color: #fff;
+	cursor: default;
+}
+
+#radio .button {
+	display: inline-block;
+	margin: 0 5px 10px 0;
+	padding: 10px;
+	background: #f2f2f2;
+	color: #333;
+	cursor: pointer;
+}
+
+#radio .button:hover {
+	background: #bbb;
+	color: #fff;
+}
+
+#radio .round {
+	border-radius: 8px;
+}
+
+#sumbit {
+	background-color: #f2f2f2;
+	border: none;
+	color: #3C3C3C;
+	padding: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 15px;
+	/*margin: 4px 2px;*/
+	cursor: pointer;
+	border-radius: 8px
+}
+
+#sumbit:hover {
+	background: #FF7575;
+	color: #fff;
+}
+
+	#sumbit:active {
+		background-color: #CE0000;
+	}
+
+input[type=text] {
+	width: 90%;
+	box-sizing: border-box;
+	border: 1.5px solid #f2f2f2;
+	border-radius: 8px;
+	font-size: 16px;
+	background-color: white;
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	padding: 10px;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+
+#dataArea {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+	#dataArea td {
+		/*border: 1px solid #ddd;*/
+		padding: 8px;
+	}
+
+	#dataArea tr:nth-child(odd) {
+		background-color: #f2f2f2;
+	}
