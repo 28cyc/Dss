@@ -9,6 +9,8 @@
 		var ListCountyResult = [];
 		$(function () {
 			ListCounty();
+			$("#store").hide()
+			$("#people").hide()
 		});
 
 		function initMap() {
@@ -114,7 +116,16 @@
 
 			postData(url, dataObj)
 				.then(data => {
-					document.getElementById('output').innerText = data.return;
+					if (type == "store") {
+						document.getElementById('output1').innerText = data.return;
+						$("#people").hide();
+						$("#store").show();
+					}
+					else {
+						document.getElementById('output2').innerText = data.return == "1" ? "適合" : "不適合";
+						$("#people").show();
+						$("#store").hide();
+					} 
 					$("#dataList").css("visibility", "visible");
 					$("#resultList").css("visibility", "visible");
 				}) 
@@ -185,8 +196,9 @@
 			</table>
 		</div>
 		<div id="resultList" style="visibility:hidden">
-			<b>預測結果：</b><br />
-			<label id="output"></label>
+			<b>預測結果：</b><br /><br />
+			<div id="store">此區域適合開 <label id="output1" style="font-size:larger;color:red;font-weight:bold"></label> 間便利商店</div>
+			<div id="people">此區域 <label id="output2" style="font-size:larger;color:red;font-weight:bold"></label> 再開便利商店</div>
 		</div>
 	</div>
 	<div id="map"></div>

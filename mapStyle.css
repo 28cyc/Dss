@@ -106,13 +106,13 @@ input[type=text] {
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
+	font-family: Arial, Helvetica, sans-serif;
 	height: 100%;
 	width: 100%;
 	margin: 0;
 }
 
-#dataArea {
-	font-family: Arial, Helvetica, sans-serif;
+#dataArea {	
 	width: 90%;
 	border-collapse: collapse;
 	border-radius: 8px;
