@@ -40,6 +40,12 @@
 	width: 100%;
 }
 
+#radio{
+	display: table;
+    margin: 0 auto;
+    width: 90%;
+}
+
 #radio input[type="radio"] {
 	display: none;
 }
@@ -79,7 +85,9 @@
 	font-size: 15px;
 	/*margin: 4px 2px;*/
 	cursor: pointer;
-	border-radius: 8px
+	border-radius: 8px;
+	display: block;
+    margin : 0 auto;
 }
 
 #sumbit:hover {
@@ -101,6 +109,8 @@ input[type=text] {
 	background-position: 10px 10px;
 	background-repeat: no-repeat;
 	padding: 10px;
+	display: block;
+    margin : 0 auto;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -118,8 +128,15 @@ body {
 	border-radius: 8px;
 	overflow: hidden;
 	background-color: #f2f2f2;
+	display: block;
+    margin : 0 auto;
 }
 
 	#dataArea td {
 		padding: 8px;
 	}
+	
+#store, #people {
+	display: table;
+    margin: 0 auto;
+}
