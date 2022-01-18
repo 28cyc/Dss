@@ -150,11 +150,10 @@
 						$("#people").show();
 						$("#store").hide();
 					} 
-					$("#dataList").css("visibility", "visible");
-					$("#resultList").css("visibility", "visible");
-					
+					$("#dataList").css("visibility", "visible");					
 					setTimeout(function(){
 						hideLoading();
+						$("#resultList").css("visibility", "visible");
 					},1000);
 				}) 
 				.catch(error => console.error(error))
