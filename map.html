@@ -140,21 +140,26 @@
 
 			postData(url, dataObj)
 				.then(data => {
-					if (type == "store") {
-						document.getElementById('output1').innerText = data.return;
-						$("#people").hide();
-						$("#store").show();
+					if (type == "store") {					
+						$("#dataList").css("visibility", "visible");
+						setTimeout(function(){						
+							$("#resultList").css("visibility", "visible");
+							document.getElementById('output1').innerText = data.return;
+							$("#people").hide();
+							$("#store").show();
+							hideLoading();
+						},1000);
 					}
-					else {
-						document.getElementById('output2').innerText = data.return == "1" ? "適合" : "不適合";
-						$("#people").show();
-						$("#store").hide();
+					else {						
+						$("#dataList").css("visibility", "visible");
+						setTimeout(function(){						
+							$("#resultList").css("visibility", "visible");
+							document.getElementById('output2').innerText = data.return == "1" ? "適合" : "不適合";
+							$("#people").show();
+							$("#store").hide();
+							hideLoading();
+						},1000);
 					} 
-					$("#dataList").css("visibility", "visible");					
-					setTimeout(function(){
-						hideLoading();
-						$("#resultList").css("visibility", "visible");
-					},1000);
 				}) 
 				.catch(error => console.error(error))
 		}
